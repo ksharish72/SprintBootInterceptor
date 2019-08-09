@@ -5,7 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.poc.rest.controller.EmployeeController;
+import com.poc.rest.controller.ServiceController;
+import com.poc.rest.memcache.AWSElasticCache;
 import com.poc.shared.ObjectUtil;
 
 public class ServiceInterceptor  implements HandlerInterceptor {
@@ -19,9 +20,9 @@ public class ServiceInterceptor  implements HandlerInterceptor {
 	        System.out.println("Start Time: " + System.currentTimeMillis());
 	        request.setAttribute("startTime", startTime);
 	        String parameterKey= request.getParameter("key");
-	        if(EmployeeController.memoryCache.CheckIfExistsInCache(parameterKey)) {
+	        if(AWSElasticCache.CheckIfExistsInCache(parameterKey)) {
 	        	  response.setContentType("application/json");
-	        	  String jsonString=ObjectUtil.serializeObjectToString(  EmployeeController.memoryCache.Get(parameterKey));
+	        	  String jsonString=ObjectUtil.serializeObjectToString(  AWSElasticCache.Get(parameterKey));
 	        	  response.getWriter().write(jsonString
 	    	        	);
 	        	return false;

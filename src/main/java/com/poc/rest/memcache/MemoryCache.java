@@ -1,21 +1,21 @@
 package com.poc.rest.memcache;
 
 import org.cache2k.Cache;
+
 import org.cache2k.Cache2kBuilder;
 
-import com.poc.rest.model.Employees;
 
 public class MemoryCache {
-	 Cache<String, Employees> cache = new Cache2kBuilder<String, Employees>() {}
+	 Cache<String, String> cache = new Cache2kBuilder<String, String>() {}
      .name("responseHolder")
      .eternal(true)
      .entryCapacity(100)
      .build();
- 	public void Add(String key,Employees actualServiceresponse) {
+ 	public void Add(String key,String actualServiceresponse) {
 		// TODO Auto-generated method stub
  	cache.peekAndPut(key, actualServiceresponse);
  	}
- 	public Employees Get(String key) {
+ 	public String Get(String key) {
 		// TODO Auto-generated method stub
  		if(cache.containsKey(key)) {
  		 	return cache.peek(key); 			
